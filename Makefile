@@ -4,14 +4,14 @@ LIB_DIR = lib
 JQ_DIR = ${LIB_DIR}/jquery
 LATEST_JQ = ${DIST_DIR}/jquery.min.js
 PLUGIN = jquery.orelse.js
-DIST_FILE = ${DIST}/${PLUGIN}
+DIST_FILE = ${DIST_DIR}/${PLUGIN}
 SRC_FILE = ${SRC_DIR}/${PLUGIN}
 
 all: clean update_submodules plugin
 
 update_submodules:
 	@echo "Updating submodules"
-	@git submodule update --init --recursive --merge ${JQ_DIR}
+	@git submodule update --init --recursive --merge
 
 ${DIST_DIR}:
 	@echo "Making dist directory"
@@ -20,11 +20,11 @@ ${DIST_DIR}:
 ${LATEST_JQ}:
 	@echo "Building latest jQuery"
 	@cd ${JQ_DIR} && $(MAKE)
-	@cp -f ${JQ_DIR}/${LATEST_JQ} ${DIST_DIR}
+	@cp -f ${JQ_DIR}/${LATEST_JQ} ${DIST_DIR}/
 
-plugin: ${LATEST_JQ}
+plugin: ${DIST_DIR} ${LATEST_JQ}
 	@echo "Building plugin"
-	@cp -f ${SRC_FILE} ${DIST_FILE}
+	@cp -f ${SRC_FILE} ${DIST_DIR}/
 
 clean:
 	@echo "Removing dist directory"
