@@ -47,13 +47,13 @@ Let's start with something basic. This will alert to you that nothing has been
 selected:
 
     $('.nothing').orElse(function() {
-        alert('nothing was selected... :'-(
+        alert('nothing was selected... :-(');
     });
 
 And this one stores the jQuery object for later use:
 
     var $nothing = $('.nothing').orElse(function() {
-        alert('nothing was selected... :'-(
+        alert('nothing was selected... :-(');
     });
 
 I could also return anything that I wanted from the `orElse` method:
