@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>jQuery Or Else Demo</title>
+    <script src="../dist/jquery.min.js"></script>
+    <script src="../dist/jquery.orelse.min.js"></script>
+    <script>
+      $(function() {
+        var expected = 0;
+        var actual   = 0;
+
+        ++expected;
+        $(".nothing").orElse(function() {
+          ++actual;
+        });
+
+        expected += 2;
+        $(".nothing").orElse(function() {
+          ++actual;
+        }).orElse(function() {
+          ++actual;
+        });
+
+        ++expected;
+        $(".nothing").orElse(function() {
+          ++actual;
+          return $("#my-awesome-list");
+        }).orElse(function() {
+          ++actual;
+        });
+
+        ++expected;
+        $(".my-awesome-list-item")
+          .filter(".nothing")
+          .orElse(function() {
+            ++actual;
+            return this.end();
+          }).orElse(function() {
+            ++actual;
+          });;
+
+        console.log("Expected: " + expected);
+        console.log("Actual:   " + actual);
+      });
+    </script>
+  </head>
+  <body>
+    <ul id="my-awesome-list">
+      <li class="my-awesome-list-item">This</li>
+      <li class="my-awesome-list-item">is</li>
+      <li class="my-awesome-list-item">the</li>
+      <li class="my-awesome-list-item">best</li>
+      <li class="my-awesome-list-item">plugin</li>
+      <li class="my-awesome-list-item">ever!</li>
+    </ul>
+  </body>
+</html>
