@@ -11,7 +11,13 @@ all: clean update_submodules plugin
 
 update_submodules:
 	@echo "Updating submodules"
-	@git submodule update --init --recursive --merge
+	@if [ -d .git ]; then \
+		if git submodule status | grep -q -E '^-'; then \
+			git submodule update --init --recursive; \
+		else \
+			git submodule update --init --recursive --merge; \
+		fi; \
+	fi;
 
 ${DIST_DIR}:
 	@echo "Making dist directory"
