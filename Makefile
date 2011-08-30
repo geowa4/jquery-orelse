@@ -1,8 +1,10 @@
 SRC_DIR = src
+TEST_DIR = test
 DIST_DIR = dist
 LIB_DIR = lib
 JQ_DIR = ${LIB_DIR}/jquery
 JQ_BUILD_DIR = ${JQ_DIR}/build
+BROWSER = `which firefox`
 JS_ENGINE ?= `which node nodejs`
 COMPILER = ${JS_ENGINE} ${JQ_BUILD_DIR}/uglify.js --unsafe
 POST_COMPILE = ${JS_ENGINE} ${JQ_BUILD_DIR}/post-compile.js
@@ -42,8 +44,11 @@ min: plugin
 	@echo "Minifiying plugin"
 	${COMPILER} ${DIST_FILE} > ${DIST_FILE_MIN}
 
+test: min
+	${BROWSER} ${TEST_DIR}/smoke-test.html &
+
 clean:
 	@echo "Removing dist directory"
 	@rm -rf ${DIST_DIR}
 
-.PHONY: all update_submodules plugin min clean
+.PHONY: all update_submodules plugin min test clean
