@@ -20,14 +20,20 @@
 	       typeof arguments[1] === "function") {
 		var index = arguments[0];
 		var fallback = arguments[1];
+		var sliceIndex = 2;
 	    } else {
 		$.error('getOrElse' + errorString);
 	    }
+	} else {
+	    var fallback = arguments[0];
+	    var sliceIndex = 1;
 	}
 	var elems = this.get(index);
 	if(elems === undefined || elems.length === 0) {
 	    var fallen = 
-		fallback.apply(this, Array.prototype.slice.call(arguments, 2));
+		fallback.apply(this,
+			       Array.prototype.slice.call(arguments, 
+							  sliceIndex));
 	}
 	return fallen || elems;
     }
