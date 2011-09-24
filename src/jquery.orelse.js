@@ -1,3 +1,5 @@
+/*HEADER*/
+
 (function($) {
     var errorString = 
 ' requires at least on argument, and the first argument must be a function';

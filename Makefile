@@ -7,7 +7,7 @@ JQ_BUILD_DIR = ${JQ_DIR}/build
 BROWSER = `which firefox`
 JS_ENGINE ?= `which node nodejs`
 COMPILER = ${JS_ENGINE} ${JQ_BUILD_DIR}/uglify.js --unsafe
-POST_COMPILE = ${JS_ENGINE} ${JQ_BUILD_DIR}/post-compile.js
+POST_COMPILER = ${JS_ENGINE} ${LIB_DIR}/post-compile.js
 LATEST_JQ = ${DIST_DIR}/jquery.min.js
 PLUGIN = jquery.orelse.js
 PLUGIN_MIN = jquery.orelse.min.js
@@ -42,7 +42,9 @@ plugin: ${DIST_DIR} ${LATEST_JQ}
 
 min: plugin
 	@echo "Minifiying plugin"
-	${COMPILER} ${DIST_FILE} > ${DIST_FILE_MIN}
+	${COMPILER} ${DIST_FILE} > ${DIST_FILE_MIN}.tmp
+	${POST_COMPILER} ${DIST_FILE_MIN}.tmp > ${DIST_FILE_MIN}
+	rm -f ${DIST_FILE_MIN}.tmp
 
 test: min
 	${BROWSER} ${TEST_DIR}/smoke-test.html &
